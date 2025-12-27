@@ -50,7 +50,8 @@ class LLMClient:
                 
                 # Select appropriate model
                 current_model = settings.VISION_MODEL_NAME if image_base64 else settings.MODEL_NAME
-                
+                logger.info(f"Using Model for Request: {current_model}")
+
                 response = self.client.chat.completions.create(
                     model=current_model,
                     messages=messages,
