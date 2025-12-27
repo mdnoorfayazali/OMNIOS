@@ -1,0 +1,11 @@
+openai>=1.0.0
+python-dotenv
+tenacity
+pyttsx3
+SpeechRecognition
+pyaudio
+rich
+pyautogui
+Pillow
+ddgs
+python-pptx
