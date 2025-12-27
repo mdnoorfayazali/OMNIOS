@@ -37,6 +37,13 @@ def interpret_command(user_input: str) -> list[dict]:
     if text in ["ls", "list", "list files", "show files"]:
         return [{"action": "list_directory", "params": {}, "confidence": 1.0}]
 
+    # "system status" -> respond with special flag or just show status (handling in interpreter to be simple)
+    # Ideally main.py handles this, but we can hack it by returning a respond action with the status.
+    # Actually, let's map it to a "show_status" action if we had one, or just let LLM handle.
+    # But LLM failed, so let's add a rule.
+    if "system status" in text or "status" == text:
+        return [{"action": "respond", "params": {"message": "All systems operational. (View 'System Status' table above)"}, "confidence": 1.0}]
+
     # --- 2. LLM Fallback ---
     # logger.info("Rule mismatch. delegating to LLM.")
     

@@ -36,8 +36,51 @@ try:
 except ImportError:
     WEB_AVAILABLE = False
 
+
+from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, TimeElapsedColumn
+
 logger = setup_logger(__name__)
 console = Console()
+
+def startup_sequence():
+    """
+    Simulates a high-tech boot-up sequence.
+    """
+    console.clear()
+    
+    steps = [
+        ("Initializing Core Kernel...", 0.5),
+        ("Loading Neural Weights...", 0.8),
+        ("Calibrating Omni-Vision Sensors...", 0.6),
+        ("Establishing Secure Uplink...", 0.7),
+        ("Mounting Workspace File System...", 0.4),
+    ]
+
+    with Progress(
+        SpinnerColumn(spinner_name="dots2"),
+        TextColumn("[bold cyan]{task.description}"),
+        BarColumn(bar_width=40, style="blue", complete_style="bold cyan"),
+        TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
+        TimeElapsedColumn(),
+        console=console,
+        transient=True
+    ) as progress:
+        
+        # Add tasks
+        tasks = [progress.add_task(step[0], total=100) for step in steps]
+        
+        # Scramble progress to look "techy"
+        import random
+        while not progress.finished:
+            for task_id in tasks:
+                if not progress.tasks[task_id].finished:
+                    advance = random.uniform(1, 10)
+                    progress.advance(task_id, advance)
+                    time.sleep(0.02)
+    
+    console.print("[bold green]SYSTEM READY.[/bold green]", justify="center")
+    time.sleep(0.5)
+
 
 def print_banner():
     # Clear screen for dramatic effect
@@ -88,6 +131,7 @@ def main():
 
     voice_mode = args.voice and VOICE_AVAILABLE
     
+    startup_sequence()
     print_banner()
 
     if voice_mode:
