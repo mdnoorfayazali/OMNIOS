@@ -13,6 +13,8 @@ VERSION = "2.0.0"
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")
 MODEL_NAME = os.getenv("MODEL_NAME", "gpt-3.5-turbo")
+# Vision model (fallback to main model if not specified, but for Groq we default to a vision one)
+VISION_MODEL_NAME = os.getenv("VISION_MODEL_NAME", "llama-3.2-11b-vision-preview")
 
 # Security & Sandbox
 # Default to a 'workspace' folder in the current execution directory

@@ -47,8 +47,12 @@ class LLMClient:
             # 1. Try with Image (if requested)
             try:
                 messages = build_messages(use_image=bool(image_base64))
+                
+                # Select appropriate model
+                current_model = settings.VISION_MODEL_NAME if image_base64 else settings.MODEL_NAME
+                
                 response = self.client.chat.completions.create(
-                    model=settings.MODEL_NAME,
+                    model=current_model,
                     messages=messages,
                     temperature=0.0,
                 )
